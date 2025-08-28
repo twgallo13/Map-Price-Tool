@@ -1,0 +1,5 @@
+{
+  "name": "Shiekh MAP Intelligence Platform",
+  "description": "An internal tool to import, map, and analyze MAP data from various vendors.",
+  "requestFramePermissions": []
+}
