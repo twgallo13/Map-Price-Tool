@@ -1,5 +1,5 @@
 {
-  "name": "shiekh-map-intelligence-platform",
+  "name": "copy-of-shiekh-map-intelligence-platform",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,7 +12,8 @@
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "idb": "^8.0.3",
-    "papaparse": "^5.5.3"
+    "papaparse": "^5.5.3",
+    "@google/genai": "^1.16.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
