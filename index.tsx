@@ -734,13 +734,13 @@ const App = () => {
     const dashboardData = useMemo(() => ({
         totalSkus: products.length,
         mapViolations: filteredProducts.filter(p => p.isViolation).length,
-        // FIX: Explicitly type the accumulator in reduce to ensure 'count' is a number, preventing type errors in the sort function.
+        // FIX: The accumulator 'acc' was untyped, causing 'count' to be inferred as 'any' or 'unknown'. This led to errors in the sort function. Typing 'acc' as Record<string, number> solves this.
         brandBreakdown: Object.entries(products.reduce((acc: Record<string, number>, p: any) => {
             if (p.brand) {
                 acc[p.brand] = (acc[p.brand] || 0) + 1;
             }
             return acc;
-        }, {})).map(([name, count]) => ({ name, count })).sort((a, b) => (b.count as number) - (a.count as number)),
+        }, {})).map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count),
     }), [products, filteredProducts]);
 
     const requestSort = (key: string) => { setSortConfig(prev => (prev?.key === key && prev.direction === 'ascending') ? { key, direction: 'descending' } : { key, direction: 'ascending' }); };
@@ -816,7 +816,7 @@ const App = () => {
                     const checkedAndUpdatedProducts = updatedProducts.filter(p => matchedIds.has(p.id));
                     const violationsFromProducts = checkedAndUpdatedProducts.filter(p => p.isViolation);
                     const totalSavingsAtRisk = violationsFromProducts.reduce((sum, p) => sum + Math.abs(p.difference || 0), 0);
-                    // FIX: Explicitly type the accumulator in reduce to ensure brandsAffectedMap values are numbers, resolving assignment errors for PriceCheckStats.
+                    // FIX: The accumulator 'acc' was untyped, causing 'count' to be 'unknown' in 'brandsAffected'. This caused assignment and arithmetic errors. Typing 'acc' as Record<string, number> resolves them.
                     const brandsAffectedMap = violationsFromProducts.reduce((acc: Record<string, number>, p: any) => {
                         if (p.brand) {
                             acc[p.brand] = (acc[p.brand] || 0) + 1;
